@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/main.js" defer type='module'></script>
+    <title>ToDoList</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="title" id="title">ToDoList</h1>
+        <div class="toDoList">
+            <div class="addNoteWraber">
+                <input type="text" placeholder="Enter your notes" class="note" id="noteTextInput">
+                <input type="button" value="Add" class="btn" id="addItemBtn">
+            </div>
+            <div class="taskData">
+                <label for="startDate">Start Date</label>
+                <input type="date" class="note" id="noteTextInput" name="startDate">
+                <label for="endDate">End Date</label>
+                <input type="date" class="note" id="noteTextInput" name="endDate">
+                <input type="button" value="Confirm" id="confirmBtn">
+            </div>
+        </div>
+        <div class="todoListShowScreen">
+
+        </div>
+    </div>
+</body>
+
+</html>
