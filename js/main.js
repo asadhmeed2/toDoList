@@ -1,46 +1,57 @@
 import { Note } from "./note.js";
 import { ToDoList } from "./noteList.js";
 let toDoList;
-
+const localStorageItemName = 'toDoListandId'
 function start() {
 
 }
 
 
-function checkAndLoadLocalStorage(){
-    if(getItemFromLocalStorage('toDoList')){
-        let data = getItemFromLocalStorage('toDoList');
+function checkAndLoadLocalStorage() {
+    if (ifItemInLocalStorage(localStorageItemName)) {
+        let data = getItemFromLocalStorage(localStorageItemName);
         console.log(data);
         toDoList = new ToDoList(data);
+    }else{
+        toDoList = new ToDoList();
+        updateItemInLocalStorage(localStorageItemName, { id: 0, todo: toDoList });
     }
-    
 }
 
-function handleAddItem(){
-    if (getHtmlObject('#noteTextInput').value !== ""){
+function handleAddItem() {
+    if (getHtmlObject('#noteTextInput').value !== "") {
         getHtmlObject('.taskData').style.visibility = 'visible';
     }
 }
-function handleConfirmBtn(){
-    const note = getHtmlObject('#noteTextInput'),
-    startDate = getHgetHtmlObject('#startDate'),
-    endDate = getHgetHtmlObject('#endDate')
-    
+function handleConfirmBtn() {
+    const note = getHtmlObject('#noteTextInput').value,
+        startDate = getHtmlObject('#startDate').value,
+        endDate = getHtmlObject('#endDate').value
+
+    let data = getItemFromLocalStorage(localStorageItemName);
+    let task = new Note(data.id + 1, note, true, startDate, endDate)
+    toDoList.addNote(task);
+    data.todo = toDoList;
+    data.id++;
+    updateItemInLocalStorage(localStorageItemName, data)
+    getHtmlObject('.taskData').style.visibility = 'heddin';
+    //call the function that shows the items on the screen
+    console.log(data);
 }
 
 
 
-function getHtmlObject(IdOrClass){
+function getHtmlObject(IdOrClass) {
     return document.querySelector(IdOrClass);
 }
 
 //local storage
 function getItemFromLocalStorage(key) {
-    return ifItemInLocalStorage(key) 
-;
+    return ifItemInLocalStorage(key)
+        ;
 }
 function updateItemInLocalStorage(key, data) {
-    if(ifItemInLocalStorage(key)) {
+    if (ifItemInLocalStorage(key)) {
         localStorage.removeItem(key);
     }
     localStorage.setItem(key, JSON.stringify(data));
@@ -51,12 +62,12 @@ function ifItemInLocalStorage(key) {
         return JSON.parse(item);
     }
 }
-function addEventListenerToObject(IdOrClass,callback,type) {
-    document.querySelector(IdOrClass).addEventListener(type,callback);
+function addEventListenerToObject(IdOrClass, callback, type) {
+    document.querySelector(IdOrClass).addEventListener(type, callback);
 }
 window.onload = function () {
     start();
     checkAndLoadLocalStorage();
-    addEventListenerToObject("#addItemBtn",handleAddItem,"click");
-    addEventListenerToObject("#confirmBtn",handleConfirmBtn,"click");
+    addEventListenerToObject("#addItemBtn", handleAddItem, "click");
+    addEventListenerToObject("#confirmBtn", handleConfirmBtn, "click");
 }

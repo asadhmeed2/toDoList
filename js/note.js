@@ -1,5 +1,5 @@
 export class Note{
-    constructor(id,whatToDo,isActive,startDate=new Date(),endDate=new Date()){
+    constructor(id,whatToDo,isActive,startDate,endDate){
         this.id =id;
         this.note =whatToDo;
         this.isActive=isActive;
@@ -38,7 +38,7 @@ export class Note{
 {
     return `<div class="note" id="${this.id}"><input type='text' disabled="disabled" class="noteText" value='${this.note}'>
     <input class="noteDelete" value='delete'><input class="noteEdit" value='edit'></div>`
-    
+
 }    toString(){
         return `note`
     }

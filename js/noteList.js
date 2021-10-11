@@ -1,12 +1,22 @@
 import { Note } from "./note.js";
 
 export class ToDoList {
-    constructor() {
+    constructor(data=null) {
         this.noteList = [];
+        if (!data) {
+            this.noteList=[];
+        }else{
+            data=[...data.todo.noteList];
+            console.log(data);
+            data.map(el=>{
+                this.noteList.push(new Note(el.id,el.note,el.isActive,el.startDate,el.endDate))
+            })
+        }
+
     }
-    add(note) {
+    addNote(note) {
         if (new Note().typeof(note)) {
-            if (!this.varify(note.getID())) {
+            if (!this.varify(note.getId())) {
                 this.noteList = [...this.noteList, note];
             }
         }
