@@ -37,14 +37,17 @@ export class ToDoList {
         }
         return false;
     }
-    editNote(noteId, noteString, startDate, endDate) {
+    editNote(noteId, noteString, isActive, startDate, endDate) {
+    
         let note = this.getNote(noteId)
         if (note) {
             note.setNote(noteString);
-            note.setisActive(isActive);
+            note.setIsActive(isActive);
             try {
-                if (startDate.getDate() && endDate.getDate()) {
+                if (startDate ){
                     note.setStartDate(startDate);
+                }
+                if(endDate) {
                     note.setEndDate(endDate);
                 }
             } catch (error) {

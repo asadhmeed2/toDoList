@@ -46,12 +46,14 @@ function showTasks() {
     let string = "";
     toDoList.getAllNotes().map((note) => {
         string += note.getDisplayData();
+      
     });
     tasks.innerHTML = string;
     addEventListenerToDeleteEditBtn();
 }
 function addEventListenerToDeleteEditBtn(){
     toDoList.getAllNotes().map((note) => {
+        getHtmlObject(`#editFormWraper${note.id}`).style.display = "none"
         addEventListenerToObject(`#delete${note.getId()}`, handleDeletion, 'click');
         addEventListenerToObject(`#edit${note.getId()}`, handleEdit, 'click');
         addEventListenerToObject(`#check${note.getId()}`, handleCheck, 'click');
@@ -61,7 +63,23 @@ function handleCheck(e) {
 
 }
 function handleEdit(e) {
+    console.log("edit Clicked");
+    const editForm = getHtmlObject(`#editFormWraper${e.target.id.slice('edit'.length)}`);
+    editForm.style.display="flex";
+    editForm.style.flexDirection="column"
+    addEventListenerToObject(`#editedConfirmBtn${e.target.id.slice('edit'.length)}`, handleEditedData,"click");
+}
 
+function handleEditedData(e){
+    const text = getHtmlObject(`#EditedNoteTextInput${this.id.slice('editedConfirmBtn'.length)}`), startDate = getHtmlObject(`#editedStartDate${this.id.slice('editedConfirmBtn'.length)}`), endDate = getHtmlObject(`#editedEndDate${this.id.slice('editedConfirmBtn'.length)}`);
+    if(text.value.length>0){
+        toDoList.editNote(parseInt(this.id.slice('editedConfirmBtn'.length)), text.value,true,startDate.value,endDate.value )
+        console.log(toDoList);
+        updateItemInLocalStorage(localStorageItemName, { id: getItemFromLocalStorage(localStorageItemName).id,todo:toDoList});
+        showTasks()
+    }
+    getHtmlObject(`#editFormWraper${this.id.slice('editedConfirmBtn'.length)}`).style.display = "none"
+    
 }
 function handleDeletion(e) {
     toDoList.delete(parseInt(e.target.id.slice('delete'.length)));
@@ -77,8 +95,7 @@ function getHtmlObject(IdOrClass) {
 
 //local storage
 function getItemFromLocalStorage(key) {
-    return ifItemInLocalStorage(key)
-        ;
+    return ifItemInLocalStorage(key);
 }
 function updateItemInLocalStorage(key, data) {
     if (ifItemInLocalStorage(key)) {
