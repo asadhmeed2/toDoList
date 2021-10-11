@@ -22,9 +22,15 @@ export class ToDoList {
         }
         return note;
     }
+    delete(noteId){
+        if(this.varify(noteId)){
+            console.log(noteId);
+            this.noteList =this.noteList.filter(el=>!(el.id === noteId));
+        }
+    }
     varify(noteId) {
         if (typeof noteId === 'number') {
-            let element = this.noteList.find((el) => el.getID() === noteId)
+            let element = this.noteList.find((el) => el.getId() === noteId)
             if (element) {
                 return true;
             }

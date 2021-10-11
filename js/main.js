@@ -12,7 +12,7 @@ function checkAndLoadLocalStorage() {
         let data = getItemFromLocalStorage(localStorageItemName);
         console.log(data);
         toDoList = new ToDoList(data);
-    }else{
+    } else {
         toDoList = new ToDoList();
         updateItemInLocalStorage(localStorageItemName, { id: 0, todo: toDoList });
     }
@@ -20,7 +20,7 @@ function checkAndLoadLocalStorage() {
 
 function handleAddItem() {
     if (getHtmlObject('#noteTextInput').value !== "") {
-        getHtmlObject('.taskData').style.visibility = 'visible';
+        getHtmlObject('.taskData').style.display = 'flex';
     }
 }
 function handleConfirmBtn() {
@@ -34,16 +34,46 @@ function handleConfirmBtn() {
     data.todo = toDoList;
     data.id++;
     updateItemInLocalStorage(localStorageItemName, data)
-    getHtmlObject('.taskData').style.visibility = 'heddin';
+    getHtmlObject('.taskData').style.display = 'none';
     //call the function that shows the items on the screen
+    showTasks();
+    
     console.log(data);
 }
 
+function showTasks() {
+    const tasks = getHtmlObject('.todoListShowScreen');
+    let string = "";
+    toDoList.getAllNotes().map((note) => {
+        string += note.getDisplayData();
+    });
+    tasks.innerHTML = string;
+    addEventListenerToDeleteEditBtn();
+}
+function addEventListenerToDeleteEditBtn(){
+    toDoList.getAllNotes().map((note) => {
+        addEventListenerToObject(`#delete${note.getId()}`, handleDeletion, 'click');
+        addEventListenerToObject(`#edit${note.getId()}`, handleEdit, 'click');
+        addEventListenerToObject(`#check${note.getId()}`, handleCheck, 'click');
+    });
+}
+function handleCheck(e) {
 
+}
+function handleEdit(e) {
 
+}
+function handleDeletion(e) {
+    toDoList.delete(parseInt(e.target.id.slice('delete'.length)));
+    console.log(parseInt(e.target.id.slice('delete'.length)));
+    updateItemInLocalStorage(localStorageItemName, { id: getItemFromLocalStorage(localStorageItemName).id,todo: toDoList})
+    showTasks();
+}
 function getHtmlObject(IdOrClass) {
     return document.querySelector(IdOrClass);
 }
+
+
 
 //local storage
 function getItemFromLocalStorage(key) {
@@ -70,4 +100,5 @@ window.onload = function () {
     checkAndLoadLocalStorage();
     addEventListenerToObject("#addItemBtn", handleAddItem, "click");
     addEventListenerToObject("#confirmBtn", handleConfirmBtn, "click");
+    showTasks();
 }
