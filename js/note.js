@@ -48,7 +48,7 @@ export class Note {
     }
     getDisplayData() {
 
-        return `<div class="note" id="note${this.id}"><input type='checkbox' id='check${this.id}'><input type='text' disabled="disabled" class="noteText" id="text${this.id}" value='${this.note}'><input type="button" class="noteDelete" id="delete${this.id}" value='delete'><input type="button" id="edit${this.id}" class="edit" value='edit'></div>
+        return `<div class="note" id="note${this.id}"><input type='checkbox' id='check${this.id}'><div class="note-buttons"><input type="button" class="noteDelete" id="delete${this.id}" value='delete'><input type="button" id="edit${this.id}" class="edit" value='edit'></div><div type='text' class="noteText" id="text${this.id}">${this.note}</div></div>
          <div class="editFormWrapper" id="editFormWraper${this.id}" ><label for="editTaskText">Task</label>
             <input type="text" placeholder="Enter your notes" name="editTaskText" class="editedNote" id="EditedNoteTextInput${this.id}">
             <label for="editedStartDate">Start Date</label>

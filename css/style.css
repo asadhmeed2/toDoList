@@ -1,31 +1,47 @@
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
-body{
-    display: flex;
-    justify-content: center;
+body {
+  display: flex;
+  justify-content: center;
 }
-.conatainer{
-    width: 100vw;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+.conatainer {
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.toDoList{
-   
-    display: flex;
+.toDoList {
+  display: flex;
 }
-.taskData{
-    display: none;
-    flex-direction: column;
-    
+.taskData {
+  display: none;
+  flex-direction: column;
+}
+.todoListShowScreen {
+  width: 50vw;
+  height: 80vh;
+}
+.note {
+  width:10vw;
+  display: flex;
+  gap: 1vmax;
+  margin: 0.5vmax;
+}
+.note-text{
+    width: 50vw;
+}
+.title {
+  margin-top: 1vmax;
+  text-align: center;
 }
 .todoListShowScreen{
-    width: 50vw;
-    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
 }
-.note{
-    width: 50vw;
-}
+
